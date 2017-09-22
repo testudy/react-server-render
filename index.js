@@ -17,7 +17,10 @@ require("babel-register")({
     cache: true
 });
 
+require('ignore-styles');
+
 const express = require('express');
+const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const App = require('./app/App.js').default;
 
@@ -25,7 +28,7 @@ const app = express();
 
 app.get('/', function (req, res) {
     const data = {};
-    const html = ReactDOMServer.renderToString(React.createElement(Home, data));
+    const html = ReactDOMServer.renderToString(React.createElement(App, data));
     // 下面代码可以将渲染的结果直接输出，但不符合正式使用要求
     res.send(html);
 });
