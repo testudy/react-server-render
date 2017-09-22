@@ -9,6 +9,7 @@
 
 # production
 /build
+/views
 
 # misc
 .DS_Store

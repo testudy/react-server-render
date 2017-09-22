@@ -20,17 +20,24 @@ require("babel-register")({
 require('ignore-styles');
 
 const express = require('express');
+const engines = require('consolidate');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
+
 const App = require('./app/App.js').default;
 
 const app = express();
+app.set('views', './views')
+app.engine('html', engines.hogan);
+
+app.use(express.static('build', {index: false}));
 
 app.get('/', function (req, res) {
     const data = {};
     const html = ReactDOMServer.renderToString(React.createElement(App, data));
     // 下面代码可以将渲染的结果直接输出，但不符合正式使用要求
-    res.send(html);
+
+    res.render('index.html', { html: html, data: JSON.stringify(data) });
 });
 
 app.listen(8081, function () {
