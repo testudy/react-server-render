@@ -24,7 +24,7 @@ const engines = require('consolidate');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 
-const App = require('./app/App.js').default;
+const App = require('./app/component/App.js').default;
 
 const app = express();
 
