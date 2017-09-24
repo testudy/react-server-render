@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-const props = window.__INITIAL_STATE__;
+fetch('/api/desc').then((resp) => {
+    return resp.text();
+}).then((body) => {
+    console.log(body);
+    const props = {data: body};
+    ReactDOM.render(<App
+        {...props}
+    />, document.getElementById('root'));
+});
 
-ReactDOM.render(<App
-    {...props}
-/>, document.getElementById('root'));
