@@ -1,3 +1,6 @@
+// polyfills
+global.fetch = require('node-fetch');
+
 require("babel-register")({
     presets: ["es2015", "react-app"],
 
