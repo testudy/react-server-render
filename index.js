@@ -42,11 +42,15 @@ app.get('/api/desc', function (req, res) {
 app.get('/', function (req, res) {
     // 简单解决node-fetch host问题
     app.locals.host = req.headers.host;
-    const props = {data: 'props'};
-    const html = ReactDOMServer.renderToString(React.createElement(App, props));
-    // 下面代码可以将渲染的结果直接输出，但不符合正式使用要求
 
-    res.render('index.html', { html: html, props: JSON.stringify(props) });
+    fetch('/api/desc').then((resp) => {
+        return resp.text();
+    }).then((body) => {
+        console.log(body);
+        const props = {data: body};
+        const html = ReactDOMServer.renderToString(React.createElement(App, props));
+        res.render('index.html', { html: html, props: JSON.stringify(props) });
+    });
 });
 
 app.listen(8081, function () {

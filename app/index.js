@@ -3,4 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const props = window.__INITIAL_STATE__;
+
+ReactDOM.render(<App
+    {...props}
+/>, document.getElementById('root'));

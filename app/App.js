@@ -5,22 +5,14 @@ import './App.css';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: 'init',
-        };
-
-        fetch('/api/desc').then((resp) => {
-            return resp.text();
-        }).then((body) => {
-            console.log(body);
-            this.state = {
-                data: body,
-            };
-        });
     }
 
     componentWillMount() {
         console.log('will mount');
+    }
+
+    componentDidMount() {
+        console.log('did mount');
     }
 
     render() {
@@ -32,9 +24,6 @@ class App extends Component {
                 </div>
                 <p className="App-intro">
                     { this.props.data }
-                </p>
-                <p className="App-intro">
-                    { this.state.data}
                 </p>
             </div>
         );
