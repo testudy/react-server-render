@@ -8,8 +8,6 @@ import { fetchData } from './action/';
 
 const store = configureStore(window.__INITIAL_STATE__);
 
-store.dispatch(fetchData()).then(() => {
-    ReactDOM.render(<Root
-        store={store}
-    />, document.getElementById('root'));
-});
+ReactDOM.render(<Root
+    store={store}
+/>, document.getElementById('root'));
