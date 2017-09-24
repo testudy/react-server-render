@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './component/App';
 
-fetch('/api/desc').then((resp) => {
-    return resp.text();
-}).then((body) => {
-    console.log(body);
-    const props = {data: body};
-    ReactDOM.render(<App
-        {...props}
+import configureStore from './store/index';
+import Root from './container/Root';
+import { fetchData } from './action/';
+
+const store = configureStore(window.__INITIAL_STATE__);
+
+store.dispatch(fetchData()).then(() => {
+    ReactDOM.render(<Root
+        store={store}
     />, document.getElementById('root'));
 });
-
