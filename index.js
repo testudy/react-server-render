@@ -24,7 +24,11 @@ const engines = require('consolidate');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 
-const App = require('./app/component/App.js').default;
+const configureStore = require('./app/store/index').default;
+const Root = require('./app/container/Root').default;
+const fetchData = require('./app/action/').fetchData;
+
+const store = configureStore();
 
 const app = express();
 
@@ -43,12 +47,12 @@ app.get('/', function (req, res) {
     // 简单解决node-fetch host问题
     app.locals.host = req.headers.host;
 
-    fetch('/api/desc').then((resp) => {
-        return resp.text();
-    }).then((body) => {
-        console.log(body);
-        const props = {data: body};
-        const html = ReactDOMServer.renderToString(React.createElement(App, props));
+    store.dispatch(fetchData()).then(() => {
+        const props = store.getState();
+        console.log(props);
+        const html = ReactDOMServer.renderToString(React.createElement(Root, {
+            store: store,
+        }));
         res.render('index.html', { html: html, props: JSON.stringify(props) });
     });
 });
