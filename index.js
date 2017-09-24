@@ -1,6 +1,3 @@
-// polyfills
-global.fetch = require('node-fetch');
-
 require("babel-register")({
     presets: ["es2015", "react-app"],
 
@@ -30,17 +27,26 @@ const ReactDOMServer = require('react-dom/server');
 const App = require('./app/App.js').default;
 
 const app = express();
+
+require('./polyfills')(app);
+
 app.set('views', './views')
 app.engine('html', engines.hogan);
 
 app.use(express.static('build', {index: false}));
 
+app.get('/api/desc', function (req, res) {
+    res.send('desc react server render');
+});
+
 app.get('/', function (req, res) {
-    const data = {};
-    const html = ReactDOMServer.renderToString(React.createElement(App, data));
+    // 简单解决node-fetch host问题
+    app.locals.host = req.headers.host;
+    const props = {data: 'props'};
+    const html = ReactDOMServer.renderToString(React.createElement(App, props));
     // 下面代码可以将渲染的结果直接输出，但不符合正式使用要求
 
-    res.render('index.html', { html: html, data: JSON.stringify(data) });
+    res.render('index.html', { html: html, props: JSON.stringify(props) });
 });
 
 app.listen(8081, function () {

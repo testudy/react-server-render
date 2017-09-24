@@ -23,7 +23,7 @@
     <% if (!htmlWebpackPlugin.options.isDev) { %>
         <div id="root">{{& html }}</div>
         <script>
-            window.__INITIAL_STATE__ = {{& data }};
+            window.__INITIAL_STATE__ = {{& props }};
         </script>
     <% } else { %>
         <div id="root"></div>

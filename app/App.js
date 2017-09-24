@@ -5,9 +5,22 @@ import './App.css';
 class App extends Component {
     constructor(props) {
         super(props);
-        fetch('/static/js/bundle.js').then(function (resp) {
-            console.log(resp);
-        });;
+        this.state = {
+            data: 'init',
+        };
+
+        fetch('/api/desc').then((resp) => {
+            return resp.text();
+        }).then((body) => {
+            console.log(body);
+            this.state = {
+                data: body,
+            };
+        });
+    }
+
+    componentWillMount() {
+        console.log('will mount');
     }
 
     render() {
@@ -18,7 +31,10 @@ class App extends Component {
                     <h2>Welcome to React</h2>
                 </div>
                 <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
+                    { this.props.data }
+                </p>
+                <p className="App-intro">
+                    { this.state.data}
                 </p>
             </div>
         );
