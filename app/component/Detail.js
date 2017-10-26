@@ -10,7 +10,6 @@ class Detail extends Component {
 
     render() {
         const props = this.props;
-        console.log(props);
         return (
             <article>
                 <header>

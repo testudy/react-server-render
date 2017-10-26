@@ -16,7 +16,7 @@ const config = [
 const routes = (
     <Switch>
         {
-            config.map(item => (<Route {...item} />))
+            config.map((item, index) => (<Route key={index} {...item} />))
         }
         <Redirect from='*' to='/'/>
     </Switch>

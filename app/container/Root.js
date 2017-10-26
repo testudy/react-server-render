@@ -12,7 +12,10 @@ function Root(props) {
     const Router = props.isClient ? BrowserRouter : StaticRouter;
     return (
         <Provider store={props.store}>
-			<Router>
+			<Router
+                location={props.location}
+                context={props.context}
+            >
                 <App>
                     {router}
                 </App>

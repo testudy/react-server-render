@@ -12,7 +12,7 @@ function getInitData(dispatch, params) {
 }
 
 function mapStateToProps(state, ownProps) {
-    const title = ownProps.match.params.title;
+    const title = decodeURIComponent(ownProps.match.params.title);
     const entity = state.data.entities.find(item => item.title === title) || {};
     
     return Object.assign({

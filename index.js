@@ -77,6 +77,7 @@ app.get('/*', function (req, res) {
 
     // store必须是fresh的，以避免前后请求间的干扰
     const store = configureStore();
+    const context = {};
 
     // inside a request
     const promises = []
@@ -87,7 +88,7 @@ app.get('/*', function (req, res) {
         const match = matchPath(req.url, route);
         console.log('match', match);
         if (match) {
-            promises.push(route.component.getInitData(store.dispatch, match.params)())
+            promises.push(route.component.getInitData(store.dispatch, match.params)());
         }
         return match;
     });
@@ -100,6 +101,8 @@ app.get('/*', function (req, res) {
         const html = ReactDOMServer.renderToString(React.createElement(Root, {
             store: store,
             isClient: false,
+            location: req.url,
+            context: context,
         }));
         console.log('html', html);
         res.render('index.html', { html: html, props: JSON.stringify(props) });
