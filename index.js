@@ -38,9 +38,26 @@ app.engine('html', engines.hogan);
 
 app.use(express.static('build', {index: false}));
 
-app.get('/api/desc', function (req, res) {
-    res.send('desc react server render');
+const tangPoems = require('./data/tang-poems.json');
+
+app.get('/api/table', function (req, res) {
+    const table = tangPoems.data.map((poem, index) => ({
+        id: index,
+        title: poem.title
+    }));
+    res.type('json');
+    res.send(JSON.stringify(table || []));
 });
+
+app.get('/api/:title', function (req, res) {
+    console.log('/api/:title', req.params.title);
+
+    const poem = tangPoems.data.find(poem => poem.title === String(req.params.title).trim());
+
+    res.type('json');
+    res.send(JSON.stringify(poem || {}));
+});
+
 
 app.get('/', function (req, res) {
     // 简单解决node-fetch host问题
