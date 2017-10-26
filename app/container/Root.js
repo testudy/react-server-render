@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Provider, connect } from 'react-redux';
 import {
     BrowserRouter as Router,
@@ -7,18 +7,16 @@ import {
 import router from '../router';
 import App from '../component/App';
 
-class Root extends Component {
-    render() {
-        return (
-            <Provider store={this.props.store}>
-				<Router>
-                    <App>
-                        {router}
-                    </App>
-				</Router>
-            </Provider>
-        );
-    };
+function Root(props) {
+    return (
+        <Provider store={props.store}>
+			<Router>
+                <App>
+                    {router}
+                </App>
+			</Router>
+        </Provider>
+    );
 };
 
 function mapStateToProps(state) {
