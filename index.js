@@ -28,7 +28,6 @@ const configureStore = require('./app/store/index').default;
 const Root = require('./app/container/Root').default;
 const fetchData = require('./app/action/').fetchData;
 
-const store = configureStore();
 
 const app = express();
 
@@ -46,6 +45,9 @@ app.get('/api/desc', function (req, res) {
 app.get('/', function (req, res) {
     // 简单解决node-fetch host问题
     app.locals.host = req.headers.host;
+
+    // store必须是fresh的，以避免前后请求间的干扰
+    const store = configureStore();
 
     store.dispatch(fetchData()).then(() => {
         const props = store.getState();
