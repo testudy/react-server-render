@@ -5,6 +5,10 @@ import {
     fetchTable,
 } from '../action';
 
+function getInitData(dispatch) {
+    return () => dispatch(fetchTable());
+}
+
 function mapStateToProps(state) {
     return {
         isLoading: state.data.isTableFetching,
@@ -14,9 +18,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetch: () => dispatch(fetchTable()),
+        fetch: getInitData(dispatch),
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+HomeContainer.getInitData = getInitData;
+
+export default HomeContainer;
 

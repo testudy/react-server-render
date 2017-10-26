@@ -8,13 +8,22 @@ import {
 import Home from '../container/Home';
 import Detail from '../container/Detail';
 
+const config = [
+    { exact: true, path: '/', component: Home },
+    { exact: true, path: '/:title', component: Detail },
+];
+
 const routes = (
     <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/:title" component={Detail} />
+        {
+            config.map(item => (<Route {...item} />))
+        }
         <Redirect from='*' to='/'/>
     </Switch>
 );
 
-export default routes;
+export {
+    config,
+    routes as default,
+};
 

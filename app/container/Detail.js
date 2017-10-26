@@ -6,6 +6,11 @@ import {
     fetchDetail,
 } from '../action';
 
+function getInitData(dispatch, params) {
+    const title = params.title;
+    return () => dispatch(fetchDetail(title));
+}
+
 function mapStateToProps(state, ownProps) {
     const title = ownProps.match.params.title;
     const entity = state.data.entities.find(item => item.title === title) || {};
@@ -18,9 +23,12 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     const title = ownProps.match.params.title;
     return {
-        fetch: () => dispatch(fetchDetail(title)),
+        fetch: getInitData(dispatch, ownProps.match.params),
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Detail));
+const DetailContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(Detail));
+DetailContainer.getInitData = getInitData;
+
+export default DetailContainer;
 

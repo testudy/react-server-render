@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Detail extends Component {
-    componentWillMount() {
+    componentDidMount() {
         if (!this.props.text) {
             this.props.fetch();
         }

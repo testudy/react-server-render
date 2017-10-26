@@ -68,21 +68,40 @@ app.get('/api/:title', function (req, res) {
 });
 
 
-app.get('/', function (req, res) {
+const matchPath = require('react-router-dom').matchPath;
+const routerConfig = require('./app/router').config;
+
+app.get('/*', function (req, res) {
     // 简单解决node-fetch host问题
     app.locals.host = req.headers.host;
 
     // store必须是fresh的，以避免前后请求间的干扰
     const store = configureStore();
 
-    store.dispatch(fetchTable()).then(() => {
+    // inside a request
+    const promises = []
+    // use `some` to imitate `<Switch>` behavior of selecting only
+    // the first to match
+    routerConfig.some(route => {
+        // use `matchPath` here
+        const match = matchPath(req.url, route);
+        console.log('match', match);
+        if (match) {
+            promises.push(route.component.getInitData(store.dispatch, match.params)())
+        }
+        return match;
+    });
+
+    Promise.all(promises).then(data => {
+        // do something w/ the data so the client
+        // can access it then render the app
         const props = store.getState();
-        console.log(props);
+        console.log('store.getState()', props);
         const html = ReactDOMServer.renderToString(React.createElement(Root, {
             store: store,
             isClient: false,
         }));
-        console.log(html);
+        console.log('html', html);
         res.render('index.html', { html: html, props: JSON.stringify(props) });
     });
 });

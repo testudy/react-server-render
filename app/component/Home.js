@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Home extends Component {
-    componentWillMount() {
+    componentDidMount() {
         if (this.props.table.length < 300) {
             this.props.fetch();
         }
