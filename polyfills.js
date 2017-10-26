@@ -9,6 +9,7 @@ function fetch(url, options) {
 	if (!/^https?:\/\//.test(url)) {
 		url = 'http://' + host + url;
 	}
+    console.log('fetch', url);
 	return realFetch.call(this, url, options);
 };
 

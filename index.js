@@ -48,6 +48,8 @@ app.use(express.static('build', {index: false}));
 const tangPoems = require('./data/tang-poems.json');
 
 app.get('/api/table', function (req, res) {
+    console.log('/api/table');
+
     const table = tangPoems.data.map((poem, index) => ({
         id: index,
         title: poem.title
