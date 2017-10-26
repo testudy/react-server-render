@@ -1,33 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentWillMount() {
-        console.log('will mount');
-    }
-
-    componentDidMount() {
-        console.log('did mount');
-    }
-
-    render() {
-        return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React</h2>
-                </div>
-                <p className="App-intro">
-                    { this.props.data }
-                </p>
+export default function App(props) {
+    return (
+        <div className="app">
+            <div className="app-header">
+                <img src={logo} className="app-logo" alt="logo" />
+                <h2>唐诗三百首</h2>
             </div>
-        );
-    }
+            <section className="app-intro">
+                { props.children }
+            </section>
+        </div>
+    );
 }
-
-export default App;

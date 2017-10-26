@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 
 import configureStore from './store/index';
 import Root from './container/Root';
