@@ -78,6 +78,7 @@ app.get('/', function (req, res) {
         console.log(props);
         const html = ReactDOMServer.renderToString(React.createElement(Root, {
             store: store,
+            isClient: false,
         }));
         console.log(html);
         res.render('index.html', { html: html, props: JSON.stringify(props) });

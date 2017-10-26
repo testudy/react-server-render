@@ -7,6 +7,15 @@ import { fetchData } from './action/';
 
 const store = configureStore(window.__INITIAL_STATE__);
 
-ReactDOM.render(<Root
-    store={store}
-/>, document.getElementById('root'));
+if (Object.keys(window.__INITIAL_STATE__).length === 0) {
+    ReactDOM.render(<Root
+        store={store}
+        isClient
+    />, document.getElementById('root'));
+} else {
+    ReactDOM.hydrate(<Root
+        store={store}
+        isClient
+    />, document.getElementById('root'));
+}
+
